@@ -43,7 +43,9 @@ class GuzzleWebHook implements DiscordWebHook
         }
         catch (ClientException $e)
         {
-            throw MessageCouldNotBeSent::serviceRespondedWithAnError($e);
+			if (config('discord-logger.throw_service_exception', false)) {
+				throw MessageCouldNotBeSent::serviceRespondedWithAnError($e);
+			}
         }
         catch (Exception $e)
         {
